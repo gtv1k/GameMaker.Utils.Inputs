@@ -7,7 +7,7 @@
 
 &nbsp;
 
-- ### [Download the .yymps](https://github.com/JujuAdams/input/releases/)
+- ### [Download the .yymps](https://github.com/gtv1k/GameMaker.Utils.Inputs/releases/download/4.0.0/GameMaker.Utils.Inputs.yymps)
 - ### Read the [documentation](http://jujuadams.github.io/Input)
 - ### Talk about Input on the [Discord server](https://discord.gg/8krYCqr)
 
