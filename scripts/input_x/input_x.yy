@@ -3,7 +3,7 @@
   "isCompatibility": false,
   "parent": {
     "name": "2D Checkers",
-    "path": "folders/Input/2D Checkers.yy",
+    "path": "folders/GameMaker.Utils.Inputs/Scripts/2D Checkers.yy",
   },
   "resourceVersion": "1.0",
   "name": "input_x",

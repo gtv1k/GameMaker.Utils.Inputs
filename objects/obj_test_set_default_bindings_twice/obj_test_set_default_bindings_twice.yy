@@ -25,8 +25,8 @@
   "properties": [],
   "overriddenProperties": [],
   "parent": {
-    "name": "Test Cases",
-    "path": "folders/Test Cases.yy",
+    "name": "Tests",
+    "path": "folders/GameMaker.Utils.Inputs/Tests.yy",
   },
   "resourceVersion": "1.0",
   "name": "obj_test_set_default_bindings_twice",

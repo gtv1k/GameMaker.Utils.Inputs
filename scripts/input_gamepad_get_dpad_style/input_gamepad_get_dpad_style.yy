@@ -3,7 +3,7 @@
   "isCompatibility": false,
   "parent": {
     "name": "Gamepads (Direct)",
-    "path": "folders/Input/Gamepads (Direct).yy",
+    "path": "folders/GameMaker.Utils.Inputs/Scripts/Gamepads (Direct).yy",
   },
   "resourceVersion": "1.0",
   "name": "input_gamepad_get_dpad_style",
