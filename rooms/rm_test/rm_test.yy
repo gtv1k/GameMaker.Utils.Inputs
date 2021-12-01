@@ -46,8 +46,8 @@
     "PhysicsWorldPixToMetres": 0.1,
   },
   "parent": {
-    "name": "Test Cases",
-    "path": "folders/Test Cases.yy",
+    "name": "Tests",
+    "path": "folders/GameMaker.Utils.Inputs/Tests.yy",
   },
   "resourceVersion": "1.0",
   "name": "rm_test",

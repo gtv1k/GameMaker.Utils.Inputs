@@ -3,7 +3,7 @@
   "isCompatibility": false,
   "parent": {
     "name": "Cursor",
-    "path": "folders/Input/(System)/Deprecated/Cursor.yy",
+    "path": "folders/GameMaker.Utils.Inputs/Scripts/(System)/Deprecated/Cursor.yy",
   },
   "resourceVersion": "1.0",
   "name": "input_cursor_moved",

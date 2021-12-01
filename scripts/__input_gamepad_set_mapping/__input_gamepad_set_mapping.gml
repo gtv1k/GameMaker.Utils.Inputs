@@ -261,10 +261,16 @@ function __input_gamepad_set_mapping()
                             case "-": _input_negative = true; break;
                             case "+": _input_positive = true; break;
                         
-                            case "b": _raw_type = __INPUT_MAPPING.BUTTON; break;
+                            case "b":
+                                _raw_type = __INPUT_MAPPING.BUTTON;
+                            break;
+                            
                             case "a":
-                                //If we're in axis mode but we have a sign for the output direction then this is a split axis mapping
-                                if (_output_negative || _output_positive)
+                                if (__input_sdl_name_is_button(_entry_name) && (_input_negative || _input_positive))
+                                {
+                                    _raw_type = __INPUT_MAPPING.AXIS_TO_BUTTON;
+                                }
+                                else if (_output_negative || _output_positive) //If we're in axis mode but we have a sign for the output direction then this is a split axis mapping
                                 {
                                     _raw_type = __INPUT_MAPPING.SPLIT_AXIS;
                                 }
@@ -278,7 +284,7 @@ function __input_gamepad_set_mapping()
                                 //If we're in hat mode but we have a sign for the output direction then this is a hat-on-axis mapping
                                 if (_output_negative || _output_positive)
                                 {
-                                    _raw_type = __INPUT_MAPPING.HAT_ON_AXIS;
+                                    _raw_type = __INPUT_MAPPING.HAT_TO_AXIS;
                                 }
                                 else
                                 {
@@ -299,7 +305,27 @@ function __input_gamepad_set_mapping()
                 
                     //Try to find out if this constant has been set already
                     var _mapping = mapping_gm_to_raw[$ _gm_constant];
-                    if (_raw_type == __INPUT_MAPPING.HAT_ON_AXIS)
+                    if (_raw_type == __INPUT_MAPPING.AXIS_TO_BUTTON)
+                    {
+                        if (_mapping == undefined)
+                        {
+                            _mapping = set_mapping(_gm_constant, _input_slot, _raw_type, _entry_name);
+                        }
+                        else
+                        {
+                            __input_trace("Warning! Mapping for \"", _entry, "\" is a redefinition of entry name \"", _entry_name, "\"");
+                        }
+                    
+                        if (_input_negative)
+                        {
+                            _mapping.direction_sign = -1;
+                        }
+                        else if (_input_positive)
+                        {
+                            _mapping.direction_sign = 1;
+                        }
+                    }
+                    else if (_raw_type == __INPUT_MAPPING.HAT_TO_AXIS)
                     {
                         //Try to reuse the same mapping struct for hat-on-axis
                         if (_mapping == undefined)
@@ -343,7 +369,7 @@ function __input_gamepad_set_mapping()
                         {
                             _mapping = set_mapping(_gm_constant, _input_slot, _raw_type, _entry_name);
                         }
-                        else 
+                        else
                         {
                             __input_trace("Warning! Mapping for \"", _entry, "\" is a redefinition of entry name \"", _entry_name, "\"");
                         }
@@ -355,14 +381,14 @@ function __input_gamepad_set_mapping()
                     }
                 
                     //Now manage the hat masks, including setting up hat-on-axis masks
-                    if ((_raw_type == __INPUT_MAPPING.HAT) || (_raw_type == __INPUT_MAPPING.HAT_ON_AXIS))
+                    if ((_raw_type == __INPUT_MAPPING.HAT) || (_raw_type == __INPUT_MAPPING.HAT_TO_AXIS))
                     {
                         var _hat_mask = floor(10*real(_entry_1)); //TODO - lol haxx
                         if (_raw_type == __INPUT_MAPPING.HAT)
                         {
                             _mapping.hat_mask = _hat_mask;
                         }
-                        else if (_raw_type == __INPUT_MAPPING.HAT_ON_AXIS)
+                        else if (_raw_type == __INPUT_MAPPING.HAT_TO_AXIS)
                         {
                             if (_output_negative)
                             {
@@ -378,7 +404,7 @@ function __input_gamepad_set_mapping()
                     if (__INPUT_DEBUG) __input_trace(_entry_name, " = ", _raw_type, _entry_1);
                 
                     //Set axis range quirks
-                    if ((_raw_type == __INPUT_MAPPING.AXIS) || (raw_type == __INPUT_MAPPING.SPLIT_AXIS))
+                    if ((_raw_type == __INPUT_MAPPING.AXIS) || (_raw_type == __INPUT_MAPPING.SPLIT_AXIS))
                     {
                         //Identify directional input
                         var _is_directional = false;
@@ -417,4 +443,34 @@ function __input_gamepad_set_mapping()
     }
     
     #endregion
+}
+
+function __input_sdl_name_is_button(_sdl_name)
+{
+    switch(_sdl_name)
+    {
+        case "a": return true;
+        case "b": return true;
+        case "x": return true;
+        case "y": return true;
+        
+        case "dpright": return true;
+        case "dpup":    return true;
+        case "dpleft":  return true;
+        case "dpdown":  return true;
+        
+        case "leftstick":  return true;
+        case "rightstick": return true;
+        
+        case "leftshoulder":  return true;
+        case "rightshoulder": return true;
+        
+        case "start":  return true;
+        case "back":   return true;
+        case "guide":  return true;
+        case "misc1":  return true;
+        case "misc2":  return true;
+    }
+    
+    return false;
 }

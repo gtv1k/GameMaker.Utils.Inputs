@@ -2,11 +2,11 @@
   "isDnD": false,
   "isCompatibility": false,
   "parent": {
-    "name": "History",
-    "path": "folders/Input/History.yy",
+    "name": "(System)",
+    "path": "folders/GameMaker.Utils.Inputs/Scripts/(System).yy",
   },
   "resourceVersion": "1.0",
-  "name": "input_history_get",
+  "name": "__input_initialize",
   "tags": [],
   "resourceType": "GMScript",
 }
